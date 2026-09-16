@@ -1,88 +1,66 @@
 import { Clapperboard, Menu, X } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router";
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
-  const navLinks = (
+  const links = (
     <>
-      <Link
-        to="/"
-        onClick={() => setIsMenuOpen(false)}
-        className="text-sm font-medium text-gray-300 transition hover:text-white"
-      >
-        Home
-      </Link>
-
-      <Link
-        to="/movies"
-        onClick={() => setIsMenuOpen(false)}
-        className="text-sm font-medium text-gray-300 transition hover:text-white"
-      >
-        Movies
-      </Link>
+      <li className="hover:text-red-500">Home</li>
+      <li className="hover:text-red-500">Movies</li>
     </>
   );
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-black/95 backdrop-blur-md">
-      <nav className="mx-auto flex h-18 max-w-7xl items-center justify-between px-6 lg:px-8">
-        {/* Logo */}
-        <Link
-          to="/"
-          className="flex items-center gap-2 text-xl font-bold text-white"
-        >
-          <Clapperboard className="h-6 w-6 text-red-600" />
+    <div className="sticky top-0 z-50 border-b border-white/10 bg-black/95 backdrop-blur-md">
+      <div className="mx-auto flex max-w-7xl py-3 items-center justify-between px-6 lg:px-8">
+        <div className="flex items-center gap-2 text-xl md:text-[22px] font-bold text-white">
+          <Clapperboard className="h-6 w-6 text-red-600"></Clapperboard>
           <span>
             Movie<span className="text-red-600">Explorer</span>
           </span>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <div className="hidden items-center gap-8 md:flex">{navLinks}</div>
-
-        {/* Desktop Explore Button */}
-        <Link
-          to="/movies"
-          className="hidden rounded-md bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700 hover:shadow-lg hover:shadow-red-600/20 md:block"
-        >
-          Explore Movies
-        </Link>
-
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="rounded-md p-2 text-white transition hover:bg-white/10 md:hidden"
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? (
-            <X className="h-6 w-6" />
-          ) : (
-            <Menu className="h-6 w-6" />
-          )}
-        </button>
-      </nav>
-
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="border-t border-white/10 bg-black px-6 py-5 md:hidden">
-          <div className="flex flex-col gap-4">
-            {/* Mobile Links */}
-            {navLinks}
-
-            {/* Mobile Button */}
-            <Link
-              to="/movies"
-              onClick={() => setIsMenuOpen(false)}
-              className="mt-2 w-full rounded-md bg-red-600 px-5 py-3 text-center text-sm font-semibold text-white transition hover:bg-red-700"
-            >
-              Explore Movies
-            </Link>
-          </div>
         </div>
-      )}
-    </header>
+
+        <ul className="hidden md:flex items-center gap-4 text-white">
+          {links}
+        </ul>
+
+        <div className="hidden md:block">
+          <button className="bg-red-600 hover:bg-red-700 md:px-5 px-3 md:py-2.5 py-1 rounded-md text-white font-medium transition-all duration-300 hover:cursor-pointer">
+            Explore Movies
+          </button>
+        </div>
+
+        <div className="md:hidden">
+          <button
+            onClick={() => setShowMenu(!showMenu)}
+            className="rounded-md border border-white p-2 text-white"
+          >
+            {showMenu ? (
+              <X className="h-5 w-5"></X>
+            ) : (
+              <Menu className="h-5 w-5"></Menu>
+            )}
+          </button>
+
+          {showMenu && (
+            <div className="absolute left-0 top-full w-full border-t border-b border-white/10 bg-black/90 px-6 py-6 shadow-xl backdrop-blur-md md:hidden">
+              <div className="flex flex-col items-center gap-6">
+                {/* Mobile Links */}
+                <ul className="flex flex-col items-center gap-5 text-base text-white">
+                  {links}
+                </ul>
+
+                {/* Explore Button */}
+                <button className="w-full max-w-xs rounded-md bg-red-600 px-5 py-3 font-semibold text-white transition-all duration-300 hover:bg-red-700 hover:shadow-lg hover:shadow-red-600/30">
+                  Explore Movies
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 
