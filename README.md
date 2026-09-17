@@ -8,7 +8,7 @@ The project uses the TVMaze API to fetch and search movie/show data.
 
 ## Live Demo
 
-🔗 Live Demo:
+🔗 Live Demo: https://movie-explorer-seven-neon.vercel.app/
 
 ---
 
@@ -43,3 +43,12 @@ The project uses the TVMaze API to fetch and search movie/show data.
 ---
 
 ## 📦 Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/jubayer50/movie-explorer.git
+```
+
+- npm install
+- npm run dev
