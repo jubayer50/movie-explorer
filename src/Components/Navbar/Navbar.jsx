@@ -1,13 +1,25 @@
 import { Clapperboard, Menu, X } from "lucide-react";
 import { useState } from "react";
+import { Link, NavLink } from "react-router";
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   const links = (
     <>
-      <li className="hover:text-red-500">Home</li>
-      <li className="hover:text-red-500">Movies</li>
+      <NavLink
+        to={"/"}
+        className={({ isActive }) => (isActive ? "text-red-600 font-bold" : "")}
+      >
+        <li className="hover:underline decoration-red-500">Home</li>
+      </NavLink>
+
+      <NavLink
+        to={"/movies"}
+        className={({ isActive }) => (isActive ? "text-red-600 font-bold" : "")}
+      >
+        <li className="hover:underline decoration-red-500">Movies</li>
+      </NavLink>
     </>
   );
 
@@ -52,9 +64,11 @@ const Navbar = () => {
                 </ul>
 
                 {/* Explore Button */}
-                <button className="w-full max-w-xs rounded-md bg-red-600 px-5 py-3 font-semibold text-white transition-all duration-300 hover:bg-red-700 hover:shadow-lg hover:shadow-red-600/30">
-                  Explore Movies
-                </button>
+                <Link to={"/movies"}>
+                  <button className="w-full max-w-xs rounded-md bg-red-600 px-5 py-3 font-semibold text-white transition-all duration-300 hover:bg-red-700 hover:shadow-lg hover:shadow-red-600/30">
+                    Explore Movies
+                  </button>
+                </Link>
               </div>
             </div>
           )}
