@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { getMovies } from "../Services/get-movies";
+import { getMovies, searchMovies } from "../Services/get-movies";
 import MovieCard from "../Components/MovieCard/MovieCard";
 
 const Movies = () => {
   const [movies, setMovies] = useState();
   const [error, setError] = useState();
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -15,7 +16,7 @@ const Movies = () => {
         const movies = await getMovies();
         setMovies(movies);
       } catch (error) {
-        setError(error);
+        setError(error?.message);
       } finally {
         setLoading(false);
       }
@@ -23,6 +24,29 @@ const Movies = () => {
 
     fetchMovies();
   }, []);
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+
+    const query = search.trim();
+
+    if (!query) {
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError("");
+
+      const movies = await searchMovies(query);
+
+      setMovies(movies);
+    } catch (error) {
+      setError(error?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -73,6 +97,24 @@ const Movies = () => {
             Discover your next favorite movie from our collection.
           </p>
         </div>
+
+        {/* search form */}
+        <form onSubmit={handleSearch} className="mb-10 flex gap-3">
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search movies..."
+            className="flex-1 rounded-md border border-white/10 bg-zinc-900 px-4 py-3 text-white outline-none placeholder:text-gray-500 focus:border-red-600"
+          />
+
+          <button
+            type="submit"
+            className="rounded-md bg-red-600 px-6 py-3 font-semibold text-white transition hover:bg-red-700"
+          >
+            Search
+          </button>
+        </form>
 
         {/* Movies */}
         {movies?.length === 0 ? (
